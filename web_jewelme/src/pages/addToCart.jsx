@@ -1,11 +1,11 @@
 import React from "react";
-import { useCart } from "../pages/cartContext";
+import { useCart } from "./cartContext"; // ✅ SAME FOLDER
 import { getBackendImageUrl } from "../utils/backend-image";
 
 export default function CartPage() {
   const { cartItems, removeFromCart } = useCart();
 
-  console.log("Cart Items:", cartItems); // Debugging line
+  console.log("Cart Items:", cartItems);
 
   return (
     <div className="min-h-screen p-6 bg-gray-100">
@@ -30,6 +30,7 @@ export default function CartPage() {
                   alt={item.name}
                   className="w-20 h-20 object-cover rounded"
                 />
+
                 <div>
                   <h2 className="text-lg font-semibold">{item.name}</h2>
                   <p className="text-gray-600">Rs. {item.price}</p>

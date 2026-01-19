@@ -5,30 +5,29 @@ import {
   FaHeart,
   FaUserCircle,
   FaShoppingBag,
-  FaInstagram,
-  FaFacebook,
-  FaTiktok,
   FaSearch,
 } from "react-icons/fa";
 import { NavLink, Link, useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useWishlist } from "../pages/wishlistContent";
 import { useAddToCart } from "../hooks/useCart";
+import { toast } from "react-toastify";
 
 export default function Dashboard() {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const userId = storedUser?._id;
   const userName = storedUser?.name || "Guest";
 
-  const { mutate: addToCart } = useAddToCart(); // <-- backend mutation
+  const { mutate: addToCart } = useAddToCart();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
   const [products, setProducts] = useState([]);
   const [showSearchDropdown, setShowSearchDropdown] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isCartOpen, setCartOpen] = useState(false);
+
   const navigate = useNavigate();
 
+  // Logic remains identical
   const bestsellers = products.filter(
     (product) => product.categoryId?.name?.toLowerCase() === "best sellers"
   );
@@ -37,23 +36,23 @@ export default function Dashboard() {
     (product) => !bestsellers.some((b) => b._id === product._id)
   );
 
-  const toggleDrawer = () => setCartOpen((prev) => !prev);
-
   const toggleFavorite = (product) => {
     const alreadyFavorited = isInWishlist(product._id);
-    alreadyFavorited ? removeFromWishlist(product._id) : addToWishlist(product);
+    alreadyFavorited
+      ? removeFromWishlist(product._id)
+      : addToWishlist(product);
   };
 
   const handleAddToCart = (product) => {
     const user = JSON.parse(localStorage.getItem("user"));
 
-    if (!user || !user.id) {
+    if (!user || !user._id) {
       toast.error("Please login to add items to cart");
       return;
     }
 
     const payload = {
-      userId: user.id, // ✅ correct key
+      userId: user._id,
       productId: product._id,
       name: product.name,
       price: product.price,
@@ -61,7 +60,7 @@ export default function Dashboard() {
       filepath: product.filepath || "",
     };
 
-    addToCart(payload); // ✅ correct usage
+    addToCart(payload);
   };
 
   useEffect(() => {
@@ -70,151 +69,110 @@ export default function Dashboard() {
       .catch((err) => console.error("Error fetching products:", err));
   }, []);
 
+  // UI Custom Colors
+  const goldPrimary = "#D4AF37";
+  const goldDark = "#B8860B";
+  const softCream = "#FFFEF9";
+
   return (
-    <div className="font-serif">
+    <div className="font-serif bg-[#FCFBF7] min-h-screen text-gray-800">
       {/* Header */}
       <header
-        className="flex justify-between items-center p-4 border-b"
-        style={{ backgroundColor: "#FFFEF9" }}
+        className="flex justify-between items-center p-5 border-b border-gold-200 sticky top-0 z-[100] shadow-sm"
+        style={{ backgroundColor: softCream }}
       >
-        <div className="w-32">
-          <img
-            src="/images/splash.png"
-            alt="JewelMe Logo"
-            className="w-full h-auto"
-          />
+        <div className="w-36 transition-transform hover:scale-105">
+          <img src="/images/splash.png" alt="JewelMe Logo" className="drop-shadow-sm" />
         </div>
 
-        <nav className="space-x-6 text-sm">
+        <nav className="hidden lg:flex space-x-8 text-sm uppercase tracking-widest font-medium">
           {[
-            "/dashboard",
-            "/necklaces",
-            "/hoops",
-            "/rings",
-            "/bracelets",
-            "/watches",
-            "/bestsellers",
-          ].map((path, idx) => (
+            ["/dashboard", "Home"],
+            ["/necklaces", "Necklaces"],
+            ["/hoops", "Hoops"],
+            ["/rings", "Rings"],
+            ["/bracelets", "Bracelets"],
+            ["/watches", "Watches"],
+            ["/bestsellers", "Best Sellers"],
+          ].map(([path, label]) => (
             <NavLink
               key={path}
               to={path}
               className={({ isActive }) =>
-                isActive
-                  ? "text-red-500"
-                  : "text-black hover:text-red-500 transition-colors duration-300"
+                `transition-all duration-300 border-b-2 ${
+                  isActive
+                    ? "border-[#D4AF37] text-[#D4AF37]"
+                    : "border-transparent text-gray-600 hover:text-[#D4AF37] hover:border-[#D4AF37]"
+                }`
               }
             >
-              {
-                [
-                  "Home",
-                  "Necklaces",
-                  "Hoops",
-                  "Rings",
-                  "Bracelets",
-                  "Watches",
-                  "Best Sellers",
-                ][idx]
-              }
+              {label}
             </NavLink>
           ))}
         </nav>
 
-        <div className="flex items-center gap-3 text-xl">
+        <div className="flex items-center gap-5 text-xl">
           {/* Search */}
           <div className="relative">
             <button
-              onClick={() => setShowSearchDropdown((prev) => !prev)}
-              title="Search"
-              className="text-red-500 hover:text-black transition-colors duration-200 p-1"
+              onClick={() => setShowSearchDropdown((p) => !p)}
+              className="hover:text-[#D4AF37] transition-colors text-gray-700"
             >
               <FaSearch size={18} />
             </button>
 
-            {showSearchDropdown && (
-              <div className="absolute right-0 mt-2 bg-white border rounded-lg shadow-lg z-50 p-4 w-64">
-                <input
-                  type="text"
-                  placeholder="Search products..."
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full px-3 py-2 border rounded mb-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-300"
-                />
+            <AnimatePresence>
+              {showSearchDropdown && (
+                <motion.div 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  className="absolute right-0 mt-4 bg-white border border-gold-100 rounded-xl shadow-2xl z-50 p-4 w-72"
+                >
+                  <input
+                    type="text"
+                    placeholder="Search our collection..."
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full px-4 py-2 border border-gray-200 rounded-full focus:outline-none focus:border-[#D4AF37] text-sm"
+                  />
 
-                <div className="border-t pt-2">
-                  <p className="text-xs font-semibold mb-1 text-gray-500">
-                    Categories
-                  </p>
-                  {[
-                    { label: "Best Sellers", path: "/bestsellers" },
-                    { label: "Necklaces", path: "/necklaces" },
-                    { label: "Hoops", path: "/hoops" },
-                    { label: "Rings", path: "/rings" },
-                    { label: "Bracelets", path: "/bracelets" },
-                    { label: "Watches", path: "/watches" },
-                    { label: "Traditionals", path: "/traditionals" },
-                  ].map((item) => (
-                    <Link
-                      key={item.label}
-                      to={item.path}
-                      className="block px-2 py-1 text-sm text-gray-700 hover:bg-red-100 rounded"
-                      onClick={() => setShowSearchDropdown(false)}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-
-                {searchTerm && (
-                  <div className="border-t mt-2 pt-2">
-                    <p className="text-xs font-semibold text-gray-500 mb-1">
-                      Results
-                    </p>
-                    {products
-                      .filter((product) =>
-                        product.name
-                          .toLowerCase()
-                          .includes(searchTerm.toLowerCase())
-                      )
-                      .slice(0, 5)
-                      .map((product) => (
-                        <div
-                          key={product._id}
-                          className="cursor-pointer px-2 py-1 text-sm hover:bg-gray-100 rounded"
-                          onClick={() => {
-                            navigate(`/products/${product._id}`);
-                            setShowSearchDropdown(false);
-                          }}
-                        >
-                          {product.name}
-                        </div>
-                      ))}
-                  </div>
-                )}
-              </div>
-            )}
+                  {searchTerm && (
+                    <div className="mt-3 max-h-60 overflow-y-auto">
+                      {products
+                        .filter((p) =>
+                          p.name.toLowerCase().includes(searchTerm.toLowerCase())
+                        )
+                        .slice(0, 5)
+                        .map((p) => (
+                          <div
+                            key={p._id}
+                            className="cursor-pointer px-3 py-2 text-sm hover:bg-[#FAF7ED] rounded-lg transition-colors flex items-center gap-3"
+                            onClick={() => {
+                              navigate(`/products/${p._id}`);
+                              setShowSearchDropdown(false);
+                            }}
+                          >
+                            <img src={getBackendImageUrl(p.filepath)} className="w-8 h-8 rounded-full object-cover" alt="" />
+                            <span>{p.name}</span>
+                          </div>
+                        ))}
+                    </div>
+                  )}
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
 
-          <Link
-            to="/profile"
-            title="Profile"
-            className="text-red-500 hover:text-black"
-          >
+          <Link to="/profile" className="text-gray-700 hover:text-[#D4AF37] transition-colors flex items-center gap-2">
             <FaUserCircle />
+            <span className="text-xs uppercase tracking-tighter hidden md:inline">Hi, {userName}</span>
           </Link>
-          <span className="text-sm text-black font-normal">Welcome, {userName}</span>
 
-          <Link
-            to="/tobag"
-            title="Bag"
-            onClick={toggleDrawer}
-            className="text-red-500 hover:text-black"
-          >
+          <Link to="/tobag" className="text-gray-700 hover:text-[#D4AF37] transition-colors relative">
             <FaShoppingBag />
           </Link>
-          <Link
-            to="/wishlist"
-            title="Wishlist"
-            className="text-red-500 hover:text-black"
-          >
+
+          <Link to="/wishlist" className="text-gray-700 hover:text-[#D4AF37] transition-colors">
             <FaHeart />
           </Link>
         </div>
@@ -222,202 +180,104 @@ export default function Dashboard() {
 
       {/* Hero */}
       <motion.div
-        className="w-full h-[600px] bg-cover bg-center"
+        className="w-full h-[500px] md:h-[650px] bg-cover bg-center relative"
         style={{ backgroundImage: "url('/images/homepagee.png')" }}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1 }}
-      />
+      >
+        <div className="absolute inset-0 bg-black/10 flex items-center justify-center">
+            <div className="text-center text-white space-y-4">
+                <h1 className="text-5xl md:text-7xl font-light tracking-widest uppercase drop-shadow-lg">Timeless Elegance</h1>
+                <p className="text-lg md:text-xl italic font-serif">Handcrafted Gold & Diamond Jewelry</p>
+            </div>
+        </div>
+      </motion.div>
 
-      {/* Bestsellers */}
-      <section className="px-6 pt-12">
-        <h2 className="text-4xl font-bold text-center text-yellow-600 mb-8">
-          Bestsellers
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {bestsellers.map((product) => {
-            const isFavorited = isInWishlist(product._id);
+      {/* Products Sections */}
+      {[["Bestsellers", bestsellers], ["Discover Collection", shopProducts]].map(
+        ([title, list]) => (
+          <section key={title} className="max-w-7xl mx-auto px-6 py-16">
+            <div className="flex items-center justify-center gap-4 mb-12">
+                <div className="h-[1px] w-12 bg-[#D4AF37]"></div>
+                <h2 className="text-3xl md:text-4xl font-light uppercase tracking-[0.2em] text-center text-gray-800">
+                {title}
+                </h2>
+                <div className="h-[1px] w-12 bg-[#D4AF37]"></div>
+            </div>
 
-            return (
-              <div
-                key={product._id}
-                onClick={() => navigate(`/products/${product._id}`)}
-                className="relative group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer"
-              >
-                <button
-                  className={`absolute top-3 right-3 z-10 bg-white p-2 rounded-full shadow-lg transition-colors duration-300 ${
-                    isFavorited
-                      ? "text-red-500"
-                      : "text-gray-400 hover:text-red-500"
-                  }`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleFavorite(product);
-                  }}
-                >
-                  <FaHeart size={18} />
-                </button>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+              {list.map((product) => {
+                const isFavorited = isInWishlist(product._id);
 
-                <img
-                  src={getBackendImageUrl(product.filepath)}
-                  alt={product.name}
-                  className="w-full h-[320px] object-cover transition-transform duration-300 group-hover:scale-105"
-                />
-
-                <div className="p-5 space-y-2">
-                  <h3 className="text-xl font-bold text-gray-800">
-                    {product.name}
-                  </h3>
-                  <p className="text-md text-gray-600">Rs. {product.price}</p>
-                  <p className="text-sm text-gray-500">
-                    In Stock: {product.stock}
-                  </p>
-                  <p className="text-sm text-gray-500 truncate">
-                    {product.description || "No description available"}
-                  </p>
-
-                  <div className="pt-3">
-                    <motion.button
-                      whileTap={{ scale: 0.95 }}
-                      className="w-full bg-gradient-to-r from-red-500 to-pink-500 text-white font-semibold py-2 rounded-xl shadow-md hover:from-pink-600 hover:to-red-600 transition-all duration-300"
+                return (
+                  <motion.div
+                    key={product._id}
+                    whileHover={{ y: -10 }}
+                    onClick={() => navigate(`/products/${product._id}`)}
+                    className="relative group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 border border-transparent hover:border-[#D4AF37]/30 cursor-pointer"
+                  >
+                    {/* Favorite Button */}
+                    <button
+                      className={`absolute top-4 right-4 z-10 p-2.5 rounded-full shadow-md backdrop-blur-md transition-all ${
+                        isFavorited ? "bg-[#D4AF37] text-white" : "bg-white/80 text-gray-400 hover:text-[#D4AF37]"
+                      }`}
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleAddToCart(product);
-                        addToCart(product);
+                        toggleFavorite(product);
                       }}
                     >
-                      Add to Bag
-                    </motion.button>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+                      <FaHeart size={16} />
+                    </button>
 
-      {/* Shop Products */}
-      <section className="px-6 pt-16 pb-12">
-        <h2 className="text-4xl font-bold text-center text-red-500 mb-8">
-          Shop Products
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {shopProducts.map((product) => {
-            const isFavorited = isInWishlist(product._id);
+                    <div className="overflow-hidden aspect-[4/5]">
+                        <img
+                        src={getBackendImageUrl(product.filepath)}
+                        alt={product.name}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                    </div>
 
-            return (
-              <div
-                key={product._id}
-                onClick={() => navigate(`/products/${product._id}`)}
-                className="relative group bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer"
-              >
-                <button
-                  className={`absolute top-3 right-3 z-10 bg-white p-2 rounded-full shadow-lg transition-colors duration-300 ${
-                    isFavorited
-                      ? "text-red-500"
-                      : "text-gray-400 hover:text-red-500"
-                  }`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    toggleFavorite(product);
-                  }}
-                >
-                  <FaHeart size={18} />
-                </button>
+                    <div className="p-6 text-center space-y-3">
+                      <h3 className="text-lg font-medium text-gray-800 truncate uppercase tracking-wider">{product.name}</h3>
+                      <div className="flex flex-col items-center">
+                        <p className="text-[#B8860B] font-semibold text-xl">Rs. {product.price.toLocaleString()}</p>
+                        <p className="text-[10px] text-gray-400 uppercase mt-1 tracking-tighter">Availability: {product.stock > 0 ? `${product.stock} units` : 'Out of Stock'}</p>
+                      </div>
 
-                <img
-                  src={getBackendImageUrl(product.filepath)}
-                  alt={product.name}
-                  className="w-full h-[320px] object-cover transition-transform duration-300 group-hover:scale-105"
-                />
+                      <motion.button
+                        whileHover={{ scale: 1.02, backgroundColor: "#B8860B" }}
+                        whileTap={{ scale: 0.98 }}
+                        className="w-full py-3 rounded-lg text-sm font-bold uppercase tracking-widest shadow-lg transition-colors"
+                        style={{ 
+                            background: "linear-gradient(135deg, #D4AF37 0%, #C5A028 100%)",
+                            color: "white"
+                        }}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleAddToCart(product);
+                        }}
+                      >
+                        Add to Bag
+                      </motion.button>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </section>
+        )
+      )}
 
-                <div className="p-5 space-y-2">
-                  <h3 className="text-xl font-bold text-gray-800">
-                    {product.name}
-                  </h3>
-                  <p className="text-md text-gray-600">Rs. {product.price}</p>
-                  <p className="text-sm text-gray-500">
-                    In Stock: {product.stock}
-                  </p>
-                  <p className="text-sm text-gray-500 truncate">
-                    {product.description || "No description available"}
-                  </p>
-
-                  <div className="pt-3">
-                    <motion.button
-                      whileTap={{ scale: 0.95 }}
-                      className="w-full bg-gradient-to-r from-red-500 to-pink-500 text-white font-semibold py-2 rounded-xl shadow-md hover:from-pink-600 hover:to-red-600 transition-all duration-300"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleAddToCart(product);
-                      }}
-                    >
-                      Add to Bag
-                    </motion.button>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="bg-red-300 text-black px-8 py-16 grid grid-cols-1 md:grid-cols-4 gap-12 text-sm">
-        {/* Stay Connected */}
-        <div>
-          <h4 className="text-lg font-bold mb-3 tracking-wide">
-            Stay Connected
-          </h4>
-          <p className="leading-relaxed">
-            Discover exclusive offers, early access to new collections, style
-            inspiration, and personalized recommendations just for you. Be the
-            first to know about limited-time deals and member-only perks.
-          </p>
-        </div>
-
-        {/* Quick Links */}
-        <div>
-          <h4 className="text-lg font-bold mb-3 tracking-wide">Quick Links</h4>
-          <ul className="space-y-2">
-            <li className="hover:underline cursor-pointer">Help</li>
-            <li className="hover:underline cursor-pointer">
-              Shipping & Returns
-            </li>
-            <li className="hover:underline cursor-pointer">Jewelry Guide</li>
-            <li className="hover:underline cursor-pointer">Our Story</li>
-            <li className="hover:underline cursor-pointer">FAQs</li>
-            <li className="hover:underline cursor-pointer">Privacy Policy</li>
-          </ul>
-        </div>
-
-        {/* Contact Info */}
-        <div>
-          <h4 className="text-lg font-bold mb-3 tracking-wide">Contact Us</h4>
-          <p className="mb-1">Phone: 123-456-789</p>
-          <p className="mb-1">Email: support@jewelme.com</p>
-          <p className="mb-3"> Kathmandu, Nepal</p>
-          <p className="font-semibold mt-2">Working Hours:</p>
-          <p>Mon - Fri: 9:00am - 6:00pm</p>
-          <p>Sat - Sun: 10:00am - 4:00pm</p>
-        </div>
-
-        {/* Social Media */}
-        <div>
-          <h4 className="text-lg font-bold mb-3 tracking-wide">Follow Us</h4>
-          <p>Connect on social platforms:</p>
-          <div className="flex items-center gap-4 mt-3">
-            <FaInstagram className="text-2xl hover:scale-110 hover:text-white transition-all duration-200 cursor-pointer" />
-            <FaFacebook className="text-2xl hover:scale-110 hover:text-white transition-all duration-200 cursor-pointer" />
-            <FaTiktok className="text-2xl hover:scale-110 hover:text-white transition-all duration-200 cursor-pointer" />
+      {/* Footer Decoration */}
+      <footer className="py-12 border-t border-gold-100 bg-[#FAF9F6] text-center">
+          <p className="text-[#D4AF37] italic font-serif">Luxury is in each detail.</p>
+          <div className="flex justify-center gap-6 mt-4 text-gray-400">
+              <span className="hover:text-[#D4AF37] cursor-pointer transition-colors text-xs uppercase tracking-widest">About Us</span>
+              <span className="hover:text-[#D4AF37] cursor-pointer transition-colors text-xs uppercase tracking-widest">Sustainability</span>
+              <span className="hover:text-[#D4AF37] cursor-pointer transition-colors text-xs uppercase tracking-widest">Contact</span>
           </div>
-          <p className="mt-2 text-xs font-bold">@Jewelmeeveryday</p>
-        </div>
       </footer>
-
-      <div className="bg-red-300 text-center text-sm py-4 text-black border-t border-black">
-        © 2025 JewelMe. All rights reserved.
-      </div>
     </div>
   );
 }

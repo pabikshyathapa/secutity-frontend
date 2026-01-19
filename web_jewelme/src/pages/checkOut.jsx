@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { getBackendImageUrl } from "../utils/backend-image";
-import { useClearAllCartItems } from "../hooks/useCart"; //  import clear hook
+import { useClearCart } from "../hooks/useCart"; // ✅ Correct import of the hook
 
 const Checkout = () => {
   const locationRouter = useLocation();
@@ -16,7 +16,7 @@ const Checkout = () => {
   const [showModal, setShowModal] = useState(false);
   const [orderSnapshot, setOrderSnapshot] = useState([]);
 
-  const { mutate: clearAllCartItems } = useClearAllCartItems(); // Hook
+  const { mutate: clearCart } = useClearCart(); // ✅ Use mutation hook
 
   const calculateTotal = (items) =>
     items.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -33,7 +33,8 @@ const Checkout = () => {
 
     setOrderSnapshot(selectedItemsFromState);
 
-    clearAllCartItems();
+    // ✅ Clear cart after order
+    clearCart();
 
     setShowModal(true);
   };
@@ -46,11 +47,15 @@ const Checkout = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-indigo-50 p-6 flex justify-center items-center">
       <div className="w-full max-w-3xl bg-white rounded-2xl shadow-2xl p-8">
-        <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center"> Checkout</h2>
+        <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+          Checkout
+        </h2>
 
         <div className="max-h-96 overflow-y-auto space-y-5">
           {selectedItemsFromState.length === 0 ? (
-            <p className="text-center text-gray-500">No items selected for checkout.</p>
+            <p className="text-center text-gray-500">
+              No items selected for checkout.
+            </p>
           ) : (
             selectedItemsFromState.map((item) => (
               <div
@@ -104,9 +109,11 @@ const Checkout = () => {
                   onChange={() => setPaymentMethod("cod")}
                   className="form-radio text-indigo-600"
                 />
-                <span className="text-gray-800 font-medium">Cash on Delivery</span>
+                <span className="text-gray-800 font-medium">
+                  Cash on Delivery
+                </span>
               </label>
-              {/* You can add more payment options here later */}
+              {/* Add more payment methods if needed */}
             </div>
           </div>
         </div>
@@ -156,17 +163,22 @@ const Checkout = () => {
                   <strong>Delivery Address:</strong> {address}
                 </p>
                 <p>
-                  <strong>Payment Method:</strong> {paymentMethod === "cod" ? "Cash on Delivery" : paymentMethod}
+                  <strong>Payment Method:</strong>{" "}
+                  {paymentMethod === "cod" ? "Cash on Delivery" : paymentMethod}
                 </p>
                 <p>
-                  <strong>Total Paid:</strong> Rs.{calculateTotal(orderSnapshot).toFixed(2)}
+                  <strong>Total Paid:</strong> Rs.
+                  {calculateTotal(orderSnapshot).toFixed(2)}
                 </p>
               </div>
 
               <div className="mt-4 text-left max-h-60 overflow-y-auto border-t pt-4">
                 <h3 className="font-semibold mb-2">Ordered Items:</h3>
                 {orderSnapshot.map((item) => (
-                  <div key={item._id || item.productId} className="flex items-center gap-4 mb-3">
+                  <div
+                    key={item._id || item.productId}
+                    className="flex items-center gap-4 mb-3"
+                  >
                     <img
                       src={getBackendImageUrl(item.filepath)}
                       alt={item.name}
