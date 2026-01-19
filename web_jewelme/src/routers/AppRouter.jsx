@@ -150,6 +150,8 @@ import BestSellersPage from '../pages/sortyby/BestSellers'
 import CheckoutPage from '../pages/checkOut'
 import MyBag from '../pages/bagPage'
 import VerifyOtp from '../pages/verifyotp'
+import PaymentSuccess from '../pages/paymentsuccess'
+import PaymentFailed from '../pages/paymentfail'
 
 export default function AppRouter() {
   return (
@@ -177,6 +179,8 @@ export default function AppRouter() {
             <Route path="/bestsellers" element={<BestSellersPage/>}></Route>
             <Route path="/tobag" element={<MyBag/>}></Route>
             <Route path="/verify-otp" element={<VerifyOtp />} />
+            <Route path="/payment-success" element={<PaymentSuccess />} />
+            <Route path="/payment-failed" element={<PaymentFailed />} />
           </Route>
 
           <Route path='/normal/*' element={<NormalUserRoute/>}>
