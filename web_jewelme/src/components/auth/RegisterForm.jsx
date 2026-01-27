@@ -62,14 +62,14 @@ export default function RegisterForm() {
       {/* Right Side Form */}
       <div className="w-1/2 flex items-center justify-center p-10">
         <div className="w-full max-w-md space-y-4">
-          <h2 className="text-red-600 text-xl font-semibold text-center">
+          <h2 className="text-[#D4AF37] text-xl font-semibold text-center">
             Create Account
           </h2>
 
           <form onSubmit={formik.handleSubmit} className="space-y-4">
             {["name", "email", "phone", "password"].map((field) => (
               <div key={field}>
-                <label className="text-red-600 block">
+                <label className="text-[#D4AF37] block">
                   {field === "name"
                     ? "Full Name"
                     : field === "phone"
@@ -112,7 +112,7 @@ export default function RegisterForm() {
                 </div>
 
                 {formik.touched[field] && formik.errors[field] && (
-                  <p className="text-sm text-red-500">{formik.errors[field]}</p>
+                  <p className="text-sm text-[#D4AF37]">{formik.errors[field]}</p>
                 )}
               </div>
             ))}
@@ -120,7 +120,7 @@ export default function RegisterForm() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-red-500 hover:bg-red-600 text-white py-2 rounded"
+              className="w-full bg-[#D4AF37] hover:bg-[#B8962E] text-white py-2 rounded"
             >
               {isLoading ? "Registering..." : "Sign Up"}
             </button>
@@ -128,7 +128,7 @@ export default function RegisterForm() {
             <div className="text-center mt-4 text-black">Or</div>
             <div className="text-center">
               <span className="text-black">Already have an account? </span>
-              <a href="/login" className="text-red-600 hover:underline">
+              <a href="/login" className="text-[#D4AF37] hover:underline">
                 Login
               </a>
             </div>
