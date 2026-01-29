@@ -12,7 +12,7 @@ export const getUserByIdService = async (id) => {
   try {
     const response = await getUserByIdApi(id);
     if (response.succes) {
-      return response.data; // <-- return only user data here
+      return response.data; 
     } else {
       throw new Error(response.message || "Failed to fetch user");
     }
@@ -42,9 +42,8 @@ export const updateUserService = async ({ id, data }) => {
 export const deleteUserService = async (id) => {
   try {
     const response = await deleteUserApi(id);
-    return response.data;  // { success: true, message: "User Deleted" }
+    return response.data;  
   } catch (error) {
-    // Extract a useful error message
     if (error.response && error.response.data && error.response.data.message) {
       throw new Error(error.response.data.message);
     }

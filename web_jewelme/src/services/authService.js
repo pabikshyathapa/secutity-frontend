@@ -12,12 +12,12 @@ export const registerUserService = async (data) => {
 
 export const loginUserService = async (data) => {
   const res = await loginUserApi(data);
-  return res.data; // OTP sent response
+  return res.data; 
 };
 
 export const verifyMfaService = async (data) => {
   const res = await verifyMfaApi(data);
-  return res.data; // user data (token is in cookie)
+  return res.data; 
 };
 
 export const logoutUserService = async () => {
