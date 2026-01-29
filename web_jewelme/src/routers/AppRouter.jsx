@@ -12,20 +12,7 @@
 // import Dashboard from '../pages/Dashboard'
 // import Users from '../pages/Users'
 // import Categories from '../pages/Categories'
-// // import Products from '../pages/Products'
 
-// import CategoryManagement from '../pages/admin/CategoryManagement'
-// import CreateCategory from '../pages/admin/CreateCategory'
-// import ViewCategory from '../pages/admin/ViewCategory'
-// import UpdateCategory from '../pages/admin/UpdateCategory'
-// import AdminLayout from '../layouts/AdminLayout'
-// import ProductManagement from '../pages/admin/ProductManagement'
-// import CreateProduct from '../pages/admin/createProduct'
-// import UserManagement from '../pages/admin/UserManagement'
-// import AdminDashboard from '../pages/AdminDashboard'
-// import UpdateProduct from '../pages/admin/UpdateProduct'
-// import ViewProducts from '../pages/admin/viewProduct'
-// import ProductDetails from '../pages/productDetail'
 
 
 
