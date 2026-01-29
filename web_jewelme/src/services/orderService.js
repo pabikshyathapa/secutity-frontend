@@ -1,4 +1,3 @@
-// src/services/orderService.js
 import {
   checkoutOrderApi,
   getOrdersByUserApi
