@@ -90,23 +90,7 @@
 //           <Route path='/admins/*'>
 //             <Route path='productss' element={<ProductManagement />}></Route>
 //             <Route path='productss/create' element={<CreateProduct/>}></Route>
-//             <Route path='productss/:id/edit' element={<UpdateProduct/>}></Route>
-//             <Route path='productss/:id' element={<ViewProducts/>}></Route>
-//             <Route path='categoryy' element={<CategoryManagement/>}></Route>
-//             <Route path='categoryy/:id' element={<ViewCategory/>}></Route>
-//             <Route path='categoryy/:id/edit' element={<UpdateCategory/>}></Route>
-//             <Route path='categoryy/create' element={<CreateCategory/>}></Route>
-//             <Route path='userss' element={<UserManagement />}></Route>
-            
-//           </Route>
-//         </Route>
- 
-//         </Route>
-//       </Routes>
-//     </BrowserRouter>
-//     </AuthContextProvider> 
-//   );
-// }
+
 
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
