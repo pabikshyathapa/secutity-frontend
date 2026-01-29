@@ -14,16 +14,6 @@ export const getAllProductService = async (page = 1, limit = 9) => {
     throw err.response?.data || { message: "Fetch failed" };
   }
 };
-
-// export const getAllProductService = async (page = 1, limit = 10) => {
-//   try {
-//     const res = await getAllProductApi(page, limit)
-//     return res.data
-//   } catch (err) {
-//     throw err.response?.data || { message: "Fetch failed" }
-//   }
-// }
-// ✅ Create one product
 export const createOneProductService = async (data) => {
     try {
         const response = await createOneProductApi(data);
