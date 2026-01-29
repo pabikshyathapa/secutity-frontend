@@ -25,7 +25,7 @@ export const useCheckoutOrder = () => {
     onSuccess: () => {
       toast.success("Order placed successfully");
       queryClient.invalidateQueries(["user_orders"]);
-      queryClient.invalidateQueries(["user_cart"]); // Optional: clear cart after order
+      queryClient.invalidateQueries(["user_cart"]); 
     },
     onError: (err) => {
       toast.error(err.message || "Failed to place order");
