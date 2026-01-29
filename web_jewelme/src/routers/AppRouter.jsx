@@ -70,14 +70,6 @@
 
 
 
-//         </Route>
-//         {/* </Route> */}
-//         <Route path='/normal/*' element={<NormalUserRoute/>}>
-//         <Route path='order' element={<>My Order</>}></Route>
-//         <Route path='cart' element={<>My Cart</>}></Route>
-//         <Route path='*' element={<>404 not found</>}></Route>
-//         </Route>
-
         
 
 
