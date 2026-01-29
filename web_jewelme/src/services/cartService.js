@@ -55,15 +55,7 @@
 //   }
 // };
 
-// export const addToCartService = async (data) => {
-//   try {
-//     const response = await addToCartApi(data);
-//     console.log("ADD CART RESPONSE", response.data);
-//     return response.data;
-//   } catch (err) {
-//     throw err.response?.data || { message: "Failed to add to cart" };
-//   }
-// };
+
 
 
 
