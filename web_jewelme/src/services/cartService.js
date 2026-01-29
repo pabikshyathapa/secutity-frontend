@@ -1,32 +1,3 @@
-// import {
-//   getUserCartApi,
-//   addToCartApi,
-//   updateCartItemApi,
-//   deleteCartItemApi,
-//   getAllCartItemsApi,
-//   clearAllCartItemsApi
-// } from "../api/cartApi";
-
-// // cartService.js
-// // export const getUserCartService = async (userId) => {
-// //   try {
-// //     const response = await getUserCartApi(userId);
-// //     console.log("🛒 Cart Fetch Response:", JSON.stringify(response.data, null, 2));
-
-// //     // Return the products array inside the cart object
-// //     return response.data?.data?.products || [];
-// //   } catch (err) {
-// //     throw err.response?.data || { message: "Failed to fetch cart" };
-// //   }
-// // };
-// export const getUserCartService = async (userId) => {
-//   try {
-//     const response = await getUserCartApi(userId);
-//     console.log("🛒 Fetched from API:", response.data);
-
-
-
-
 import {
   getMyCartApi,
   addToCartApi,
