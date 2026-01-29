@@ -1,9 +1,8 @@
 import api from "../api/api";
 
 /**
- * Create a new order
- * @param {Object} orderData - { paymentMethod: 'cod' | 'esewa', shippingAddress: {...} }
- * @returns {Promise} Order response
+ * @param {Object} orderData
+ * @returns {Promise} 
  */
 export const createOrder = async (orderData) => {
   try {
@@ -16,7 +15,7 @@ export const createOrder = async (orderData) => {
 
 /**
  * Get user's orders
- * @returns {Promise} Array of orders
+ * @returns {Promise} 
  */
 export const getMyOrders = async () => {
   try {
@@ -29,7 +28,7 @@ export const getMyOrders = async () => {
 
 /**
  * Get all orders (Admin only)
- * @returns {Promise} Array of all orders
+ * @returns {Promise} 
  */
 export const getAllOrders = async () => {
   try {
@@ -51,7 +50,7 @@ export const submitEsewaPayment = (paymentData) => {
 
   const fields = {
     amount: paymentData.amount,
-    tax_amount: paymentData.tax_amount, // ✅ Added
+    tax_amount: paymentData.tax_amount, 
     total_amount: paymentData.total_amount,
     transaction_uuid: paymentData.transaction_uuid,
     product_code: paymentData.product_code,
