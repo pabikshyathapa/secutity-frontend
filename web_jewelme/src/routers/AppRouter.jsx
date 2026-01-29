@@ -79,17 +79,7 @@
 //         </Route>
 
         
-//         <Route element={<MainLayout />}>
-//         <Route path='/admin/*'>
-//         <Route path='adashboard' element={<AdminDashboard/>}></Route>
-//         <Route path='users' element={<Users/>}></Route>
-//         <Route path='Categories' element={<Categories/>}></Route>
-//         {/* <Route path='products' element={<Products/>}></Route> */}
-//         </Route>
-//         <Route element={<AdminLayout/>}>
-//           <Route path='/admins/*'>
-//             <Route path='productss' element={<ProductManagement />}></Route>
-//             <Route path='productss/create' element={<CreateProduct/>}></Route>
+
 
 
 import React from 'react'
