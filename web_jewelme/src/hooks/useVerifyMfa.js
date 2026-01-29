@@ -53,9 +53,8 @@ export const useVerifyMfa = () => {
         return;
       }
 
-      // No token in response anymore - it's in httpOnly cookie
-      // Just pass user data to login context
-      login(data.user, null); // Pass null for token since it's in cookie
+      
+      login(data.user, null);
 
       toast.success("Login successful");
 
