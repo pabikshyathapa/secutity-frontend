@@ -40,16 +40,7 @@
 // import MyBag from '../pages/bagPage'
 // import VerifyOtp from '../pages/verifyotp'
 
-// export default function AppRouter() {
-//   return (
-//     <AuthContextProvider>
-//     <BrowserRouter>
-//       <Routes>
-//         <Route path='/login-test' element={<LoginTest/>}></Route>
-//         <Route path='/state-test' element={<StateManage />}></Route>
-//         <Route element={<MainLayout />}>
-//           <Route path="/" element={<Homepage />}></Route>
-//           {/* <Route element={<GuestRoute/>}> */}
+
 
 
 
