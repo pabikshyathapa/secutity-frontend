@@ -2,16 +2,13 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { createOrder, getMyOrders, getAllOrders } from "../services/checkoutorder";
 import { toast } from "react-toastify";
 
-/**
- * Hook for creating orders
- */
+
 export const useCreateOrder = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: createOrder,
     onSuccess: () => {
-      // Invalidate cart and orders
       queryClient.invalidateQueries(["cart"]);
       queryClient.invalidateQueries(["orders"]);
     },
