@@ -18,7 +18,6 @@ export default function LoginForm() {
   const [captchaToken, setCaptchaToken] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  // Fetch CSRF token when component mounts
   useEffect(() => {
     fetchCsrfToken().catch((err) => {
       console.error("Failed to fetch CSRF token:", err);
@@ -39,7 +38,6 @@ export default function LoginForm() {
       setErrorMsg("");
 
       try {
-        // Use the configured api instance instead of direct axios
         await api.post("/auth/login", {
           email: values.email,
           password: values.password,
@@ -52,7 +50,6 @@ export default function LoginForm() {
           position: "top-center",
         });
 
-        // Reset CAPTCHA state on successful login
         setCaptchaRequired(false);
         setCaptchaToken(null);
         setErrorMsg("");
@@ -61,7 +58,6 @@ export default function LoginForm() {
       } catch (err) {
         const data = err?.response?.data;
 
-        // Show CAPTCHA if backend says it's required
         if (data?.captchaRequired) {
           setCaptchaRequired(true);
           setCaptchaToken(null); // Reset captcha for retry
@@ -70,7 +66,6 @@ export default function LoginForm() {
           err?.response?.status === 403 &&
           data?.code === "EBADCSRFTOKEN"
         ) {
-          // CSRF token error - try to refetch and retry
           setErrorMsg("Security token expired. Please try again.");
           try {
             await fetchCsrfToken();
@@ -90,7 +85,6 @@ export default function LoginForm() {
     <div className="flex min-h-screen bg-white">
       <ToastContainer />
 
-      {/* Left Image */}
       <div className="w-1/2 bg-[#e0d8cc] flex items-center justify-center">
         <img
           src="/images/login.png"
