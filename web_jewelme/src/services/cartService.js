@@ -24,26 +24,7 @@
 //     const response = await getUserCartApi(userId);
 //     console.log("🛒 Fetched from API:", response.data);
 
-//     // response.data looks like { success, data: { cart object }, message }
-//     if (response.data && response.data.data) {
-//       return response.data.data; // Return the whole cart object including products
-//     }
-//     return null; // or throw new Error("No cart data found");
-//   } catch (err) {
-//     throw err.response?.data || { message: "Failed to fetch cart" };
-//   }
-// };
 
-
-// // updateCartItemService expects: { userId, productId, quantity }
-// export const updateCartItemService = async (id, data) => {
-//   try {
-//     const response = await updateCartItemApi(data); // send entire body
-//     return response.data;
-//   } catch (err) {
-//     throw err.response?.data || { message: "Failed to update cart item" };
-//   }
-// };
 
 
 import {
