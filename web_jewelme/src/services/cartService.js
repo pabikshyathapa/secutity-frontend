@@ -45,19 +45,6 @@
 //   }
 // };
 
-// // deleteCartItemService expects: { userId, productId }
-// export const deleteCartItemService = async (data) => {
-//   try {
-//     const response = await deleteCartItemApi(data); // body: { userId, productId }
-//     return response.data;
-//   } catch (err) {
-//     throw err.response?.data || { message: "Failed to delete cart item" };
-//   }
-// };
-
-
-
-
 
 import {
   getMyCartApi,
