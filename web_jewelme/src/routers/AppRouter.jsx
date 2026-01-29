@@ -50,15 +50,7 @@
 //         <Route element={<MainLayout />}>
 //           <Route path="/" element={<Homepage />}></Route>
 //           {/* <Route element={<GuestRoute/>}> */}
-//           <Route path="/login" element={<Login />}></Route>
-//           <Route path='/register' element={<Register />}></Route>
-//           <Route path='/dashboard' element={<Dashboard />}></Route>
-//           <Route path='/profile' element={<ProfilePage />}></Route>
-//           <Route path='/products/:id' element={<ProductDetails />}></Route>
-//           {/* <Route path="/tocart" element={<Cart />}></Route> */}
-//           <Route path="/wishlist" element={<WishlistPage />}></Route>
-//           <Route path="/checkout" element={<CheckoutPage />}></Route>
-//           <Route path="/necklaces" element={< NecklacesPage/>}></Route>
+
 
 
 
