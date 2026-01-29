@@ -1,30 +1,3 @@
-// import React from 'react'
-// import { BrowserRouter, Route, Routes } from 'react-router-dom'
-// import Homepage from '../pages/Homepage'
-// import Login from '../pages/Login'
-// import Register from '../pages/Register'
-// import MainLayout from '../layouts/MainLayout'
-// import StateManage from '../pages/StateManage'
-// import LoginTest from '../pages/LoginTest'
-// import NormalUserRoute from './NormalUserRoute'
-// import AuthContextProvider from '../auth/AuthProvider'
-// //adminpages
-// import Dashboard from '../pages/Dashboard'
-// import Users from '../pages/Users'
-// import Categories from '../pages/Categories'
-
-
-
-
-
-
-
-
-
-        
-
-
-
 import React from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Homepage from '../pages/Homepage'
