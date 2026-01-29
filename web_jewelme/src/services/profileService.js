@@ -16,14 +16,7 @@
 // };
 // export const uploadProfileImage = async (file) => {
 //   const formData = new FormData();
-//   formData.append("profileImage", file);
 
-//   const res = await api.put("/profile/upload-image", formData, {
-//     headers: { "Content-Type": "multipart/form-data" },
-//   });
-
-//   return res.data;
-// };
 
 import api from "../api/api";
 
