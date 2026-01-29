@@ -23,7 +23,6 @@ export const createOneProductService = async (data) => {
     }
 };
 
-// ✅ Get one product by ID
 export const getOneProductService = async (id) => {
     try {
         const response = await getOneProductApi(id);
@@ -33,7 +32,6 @@ export const getOneProductService = async (id) => {
     }
 };
 
-// ✅ Update one product
 export const updateOneProductService = async (id, data) => {
     try {
         const response = await updateOneProductApi(id, data);
@@ -43,7 +41,6 @@ export const updateOneProductService = async (id, data) => {
     }
 };
 
-// ✅ Delete one product
 export const deleteOneProductService = async (id) => {
     try {
         const response = await deleteOneProductApi(id);
