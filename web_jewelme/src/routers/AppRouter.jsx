@@ -59,14 +59,7 @@
 //           <Route path="/wishlist" element={<WishlistPage />}></Route>
 //           <Route path="/checkout" element={<CheckoutPage />}></Route>
 //           <Route path="/necklaces" element={< NecklacesPage/>}></Route>
-//           <Route path="/hoops" element={< HoopsPage/>}></Route>
-//           <Route path="/rings" element={< RingsPage/>}></Route>
-//           <Route path="/bracelets" element={< BraceletsPage/>}></Route>
-//           <Route path="/watches" element={< WatchesPage/>}></Route>
-//           <Route path="/traditionals" element={<TraditionalsPage/>}></Route>
-//           <Route path="/bestsellers" element={<BestSellersPage/>}></Route>
-//           <Route path="/tobag" element={<MyBag/>}></Route>
-//           <Route path="/verify-otp" element={<VerifyOtp />} />
+
 
 
 
