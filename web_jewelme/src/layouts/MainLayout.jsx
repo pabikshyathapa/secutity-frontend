@@ -8,4 +8,3 @@ export default function MainLayout() {
     </div>
   )
 }
-// Outlet dynamic child/children placeholder

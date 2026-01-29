@@ -152,7 +152,6 @@ export default function LoginForm() {
               )}
             </div>
 
-            {/* CAPTCHA (only shown when required) */}
             {captchaRequired && (
               <div className="flex justify-center">
                 <ReCAPTCHA
