@@ -20,8 +20,6 @@ export const useAddToWishlist = () => {
   return useMutation({
     mutationFn:addToWishlist,
     onSuccess: (data) => {
-      // toast.success(data.message);
-      // Invalidate cart so it refetches
       const user = JSON.parse(localStorage.getItem("user"));
       if (user?._id) {
         queryClient.invalidateQueries(["user_wishlist", user._id]);
