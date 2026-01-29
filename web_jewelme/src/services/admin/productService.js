@@ -6,11 +6,10 @@ import {
     deleteOneProductApi
 } from "../../api/admin/productApi";
 
-// Get all products
 export const getAllProductService = async (page = 1, limit = 9) => {
   try {
     const res = await getAllProductApi(page, limit);
-    return res.data; // includes { data, total, page, pages }
+    return res.data; 
   } catch (err) {
     throw err.response?.data || { message: "Fetch failed" };
   }
