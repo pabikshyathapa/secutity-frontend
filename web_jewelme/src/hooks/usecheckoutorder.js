@@ -18,23 +18,18 @@ export const useCreateOrder = () => {
   });
 };
 
-/**
- * Hook for fetching user orders
- */
+
 export const useMyOrders = () => {
   return useQuery({
     queryKey: ["orders"],
     queryFn: getMyOrders,
-    staleTime: 1000 * 60 * 5, // 5 minutes
+    staleTime: 1000 * 60 * 5, 
     onError: (error) => {
       toast.error(error.message || "Failed to fetch orders");
     },
   });
 };
 
-/**
- * Hook for fetching all orders (Admin)
- */
 export const useAllOrders = () => {
   return useQuery({
     queryKey: ["orders", "all"],
