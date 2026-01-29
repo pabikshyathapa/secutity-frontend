@@ -26,19 +26,7 @@
 // import UpdateProduct from '../pages/admin/UpdateProduct'
 // import ViewProducts from '../pages/admin/viewProduct'
 // import ProductDetails from '../pages/productDetail'
-// import CartPage from '../pages/addToCart'
-// import WishlistPage from '../pages/wishListPage'
-// import ProfilePage from '../pages/profilePage'
-// import NecklacesPage from '../pages/sortyby/Necklaces'
-// import HoopsPage from '../pages/sortyby/Hoops'
-// import RingsPage from '../pages/sortyby/Rings'
-// import BraceletsPage from '../pages/sortyby/Bracelets'
-// import WatchesPage from '../pages/sortyby/Watches'
-// import TraditionalsPage from '../pages/sortyby/Traditionals'
-// import BestSellersPage from '../pages/sortyby/BestSellers'
-// import CheckoutPage from '../pages/checkOut'
-// import MyBag from '../pages/bagPage'
-// import VerifyOtp from '../pages/verifyotp'
+
 
 
 
